@@ -71,34 +71,39 @@
                     <a href="{{ route('home') }}"
                         class="{{ Route::is('home') ? 'bg-[#1f2b48] px-4 py-2 rounded-md' : 'text-[#c4c4c4]' }} hover:text-white transition duration-300">Home
                     </a>
-                    <a href="#"
-                        class="{{ !Route::is('home') ? 'bg-[#1f2b48] px-4 py-2 rounded-md' : 'text-[#c4c4c4]' }} hover:text-white transition duration-300">About
+                    <a href="{{ route('about-us') }}"
+                        class="{{ Route::is('about-us') ? 'bg-[#1f2b48] px-4 py-2 rounded-md' : 'text-[#c4c4c4]' }} hover:text-white transition duration-300">About
                         Us</a>
-                    <a href="#"
-                        class="{{ !Route::is('home') ? 'bg-[#1f2b48] px-4 py-2 rounded-md' : 'text-[#c4c4c4]' }} hover:text-white transition duration-300">
+                    <a href="{{ route('services') }}"
+                        class="{{ Route::is('services') ? 'bg-[#1f2b48] px-4 py-2 rounded-md' : 'text-[#c4c4c4]' }} hover:text-white transition duration-300">
                         Services</a>
-                    <a href="#"
-                        class="{{ !Route::is('home') ? 'bg-[#1f2b48] px-4 py-2 rounded-md' : 'text-[#c4c4c4]' }} hover:text-white transition duration-300">
+                    <a href="{{ route('destinations') }}"
+                        class="{{ Route::is('destinations') ? 'bg-[#1f2b48] px-4 py-2 rounded-md' : 'text-[#c4c4c4]' }} hover:text-white transition duration-300">
                         Destinations</a>
-                    <a href="#"
-                        class="{{ !Route::is('home') ? 'bg-[#1f2b48] px-4 py-2 rounded-md' : 'text-[#c4c4c4]' }} hover:text-white transition duration-300">
+                    <a href="{{ route('reviews') }}"
+                        class="{{ Route::is('reviews') ? 'bg-[#1f2b48] px-4 py-2 rounded-md' : 'text-[#c4c4c4]' }} hover:text-white transition duration-300">
                         Reviews</a>
-                    <a href="#"
-                        class="{{ !Route::is('home') ? 'bg-[#1f2b48] px-4 py-2 rounded-md' : 'text-[#c4c4c4]' }} hover:text-white transition duration-300">
+                    <a href="{{ route('contact-us') }}"
+                        class="{{ Route::is('contact-us
+                        ') ? 'bg-[#1f2b48] px-4 py-2 rounded-md' : 'text-[#c4c4c4]' }} hover:text-white transition duration-300">
                         Contact Us</a>
                 </ul>
 
-                <!-- Book a Ride Button (desktop) -->
+                <!-- Book a Ride Link (desktop) -->
                 <div class="hidden lg:block">
-                    <button
-                        class="flex items-center gap-2 bg-[#19957b] hover:bg-[#007748] px-6 py-3 rounded-md text-lg font-medium transition">
+                    <a href="{{ route('bookARide') }}"
+                        class="flex items-center gap-2 bg-[#19957b] hover:bg-[#007748]
+              px-6 py-3 rounded-md text-lg font-medium text-white transition">
+
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="size-6">
                             <path fill="currentColor"
                                 d="m255.43 117l-14-35a15.93 15.93 0 0 0-14.85-10H192v-8a8 8 0 0 0-8-8H32a16 16 0 0 0-16 16v112a16 16 0 0 0 16 16h17a32 32 0 0 0 62 0h50a32 32 0 0 0 62 0h17a16 16 0 0 0 16-16v-64a7.9 7.9 0 0 0-.57-3M80 208a16 16 0 1 1 16-16a16 16 0 0 1-16 16m56-80h-16v16a8 8 0 0 1-16 0v-16H88a8 8 0 0 1 0-16h16V96a8 8 0 0 1 16 0v16h16a8 8 0 0 1 0 16m56 80a16 16 0 1 1 16-16a16 16 0 0 1-16 16m0-96V88h34.58l9.6 24Z" />
                         </svg>
+
                         Book a Ride
-                    </button>
+                    </a>
                 </div>
+
 
                 <!-- Mobile Burger Menu Button -->
                 <button id="mobile-menu-btn" class="z-50 lg:hidden">
