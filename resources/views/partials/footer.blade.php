@@ -5,11 +5,10 @@
         <div
             class="absolute left-1/2 -translate-x-1/2 -top-28 w-full md:w-[90%] lg:w-[80%]
                    bg-gradient-to-b from-[#02041c] via-[#060b2b] to-[#00786a]
-                   rounded-[32px] px-6 py-30 md:px-16 md:py-14
+                   rounded-[32px] px-6 py-10 md:px-16 md:py-14
                    text-center text-white shadow-xl">
 
-            <div
-                class="inline-flex items-center px-5 py-1 rounded-full border border-white/30 text-xs font-semibold tracking-wide mb-4">
+            <div class="inline-flex items-center px-5 py-1 rounded-full border border-white/30 text-xs font-semibold tracking-wide mb-4">
                 Newsletter
             </div>
 
@@ -21,21 +20,32 @@
                 Get helpful health tips, service updates, and exclusive offers straight to your inbox.
             </p>
 
-            <form class="mt-8 max-w-2xl mx-auto flex flex-col sm:flex-row gap-3">
+            {{-- ✅ Dynamic Newsletter Form (AJAX) --}}
+            <form
+                id="newsletter-form"
+                class="mt-8 max-w-2xl mx-auto flex flex-col sm:flex-row gap-3">
+                @csrf
+
                 <input
                     type="email"
                     name="newsletter_email"
+                    id="newsletter_email"
                     placeholder="Enter your email address"
-                    class="flex-1 px-4 py-3 rounded-full text-sm text-gray-900 bg-white 
+                    required
+                    class="flex-1 px-4 py-3 rounded-full text-sm text-gray-900 bg-white
                            focus:outline-none focus:ring-2 focus:ring-emerald-500">
 
                 <button
                     type="submit"
-                    class="px-6 py-3 rounded-full bg-emerald-500 text-sm font-semibold 
-                           hover:bg-emerald-600 transition">
+                    id="newsletter-btn"
+                    class="px-6 py-3 rounded-full bg-emerald-500 text-white text-sm font-semibold
+                           hover:bg-emerald-600 transition disabled:opacity-60 disabled:cursor-not-allowed">
                     Subscribe Now
                 </button>
             </form>
+
+            {{-- feedback --}}
+            <p id="newsletter-message" class="mt-3 text-center text-sm hidden"></p>
         </div>
 
         {{-- MAIN FOOTER CONTENT --}}
@@ -47,7 +57,7 @@
                 {{-- Brand + description --}}
                 <div class="space-y-4">
                     <div class="flex items-center gap-3">
-                        <img src="{{ asset('images/logo.png') }}" alt="HealthRide Logo" class="h-15 w-auto">
+                        <img src="{{ asset('images/logo.png') }}" alt="HealthRide Logo" class="h-14 w-auto">
                     </div>
 
                     <p class="text-lg font-semibold text-gray-600 leading-relaxed">
@@ -76,7 +86,7 @@
 
                             <li class="flex items-center gap-2">
                                 <img src="{{ asset('images/plus-icon.png') }}" alt="Plus Icon" class="h-5 w-5">
-                                <a href="#" class="hover:text-emerald-600">Services</a>
+                                <a href="{{ route('services') }}" class="hover:text-emerald-600">Services</a>
                             </li>
                         </ul>
 
@@ -84,17 +94,17 @@
                         <ul class="space-y-2 text-gray-700 text-lg">
                             <li class="flex items-center gap-2">
                                 <img src="{{ asset('images/plus-icon.png') }}" alt="Plus Icon" class="h-5 w-5">
-                                <a href="#" class="hover:text-emerald-600">Destinations</a>
+                                <a href="{{ route('destinations') }}" class="hover:text-emerald-600">Destinations</a>
                             </li>
 
                             <li class="flex items-center gap-2">
                                 <img src="{{ asset('images/plus-icon.png') }}" alt="Plus Icon" class="h-5 w-5">
-                                <a href="#" class="hover:text-emerald-600">Reviews</a>
+                                <a href="{{ route('reviews') }}" class="hover:text-emerald-600">Reviews</a>
                             </li>
 
                             <li class="flex items-center gap-2">
                                 <img src="{{ asset('images/plus-icon.png') }}" alt="Plus Icon" class="h-5 w-5">
-                                <a href="#" class="hover:text-emerald-600">Contact Us</a>
+                                <a href="{{ route('contact-us') }}" class="hover:text-emerald-600">Contact Us</a>
                             </li>
                         </ul>
                     </div>
@@ -130,7 +140,7 @@
 
             {{-- BOTTOM BAR --}}
             <div
-                class="border-t border-gray-300 pt-4 mt-4 flex flex-col md:flex-row 
+                class="border-t border-gray-300 pt-4 mt-4 flex flex-col md:flex-row
                        items-center justify-between gap-3 text-gray-500 text-lg">
 
                 <p class="text-center md:text-left">
@@ -151,4 +161,63 @@
 
         </div>
     </div>
+
+    {{-- ✅ Newsletter AJAX Script --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('newsletter-form');
+            const emailInput = document.getElementById('newsletter_email');
+            const btn = document.getElementById('newsletter-btn');
+            const msg = document.getElementById('newsletter-message');
+
+            if (!form) return;
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                msg.classList.add('hidden');
+                msg.className = 'mt-3 text-center text-sm hidden';
+
+                btn.disabled = true;
+                const oldText = btn.innerText;
+                btn.innerText = 'Subscribing...';
+
+                try {
+                    const res = await fetch("{{ route('newsletter.store') }}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('input[name=_token]').value,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: emailInput.value
+                        })
+                    });
+
+                    const data = await res.json();
+
+                    if (!res.ok) throw data;
+
+                    msg.textContent = data.message ?? 'Thank you for subscribing!';
+                    msg.className = 'mt-3 text-center text-sm text-emerald-200 font-semibold';
+                    msg.classList.remove('hidden');
+
+                    form.reset();
+                } catch (err) {
+                    msg.textContent =
+                        err?.errors?.email?.[0] ||
+                        err?.errors?.newsletter_email?.[0] ||
+                        err?.message ||
+                        'Something went wrong. Please try again.';
+
+                    msg.className = 'mt-3 text-center text-sm text-red-200 font-semibold';
+                    msg.classList.remove('hidden');
+                } finally {
+                    btn.disabled = false;
+                    btn.innerText = oldText;
+                }
+            });
+        });
+    </script>
 </footer>

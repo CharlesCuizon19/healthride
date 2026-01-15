@@ -64,6 +64,12 @@ $reviews = [
 'avatar' => 'images/avatar.png',
 'statement' => '“I rely on HealthRide for my specialist appointments every month, and they always deliver exceptional service. The drivers are friendly, the vehicles are comfortable, and they make sure I arrive on time every single trip. It’s comforting to know I can count on them.”',
 ],
+(object) [
+'name' => 'Leonora D.',
+'passengerType' => 'Patient',
+'avatar' => 'images/avatar.png',
+'statement' => '“I rely on HealthRide for my specialist appointments every month, and they always deliver exceptional service. The drivers are friendly, the vehicles are comfortable, and they make sure I arrive on time every single trip. It’s comforting to know I can count on them.”',
+],
 ];
 @endphp
 
@@ -320,7 +326,7 @@ $reviews = [
         </div>
 
         {{-- CTA BANNER (rectangle + car responsive) --}}
-        <div class="py-16 sm:py-24 lg:py-32 bg-[#f9f9f9]">
+        <div class="py-16 sm:py-24 lg:py-25 bg-[#f9f9f9]">
             <div class="relative">
                 <img src="{{ asset('images/homepage-rectangle.png') }}" alt=""
                     class="w-full h-[420px] sm:h-[480px] lg:h-auto object-cover">

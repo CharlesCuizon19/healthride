@@ -3,7 +3,7 @@
 'packages' => [],
 ])
 
-<section class="w-full bg-[#f9fbfd] pt-16 md:pt-20 pb-20 md:pb-40">
+<section class="w-full bg-[#f9fbfd] pt-16 md:pt-20 pb-40 md:pb-40">
     <div class="max-w-screen-2xl mx-auto px-6 lg:px-10">
 
         {{-- Heading --}}

@@ -48,14 +48,29 @@
     </div>
 
     <!-- Navigation Bar -->
-    <div class="flex items-center justify-center w-full" x-data="{ scrolled: false }" x-init="window.addEventListener('scroll', () => {
-        scrolled = window.scrollY > 50
-    })"
+    <div class="flex items-center justify-center w-full"
+        x-data="{
+        scrolled: false,
+        onScroll() {
+            // ✅ Disable scroll animation on mobile/tablet
+            if (window.innerWidth < 1024) {   // < lg
+                this.scrolled = false;
+                return;
+            }
+            this.scrolled = window.scrollY > 50;
+        }
+     }"
+        x-init="
+        onScroll();
+        window.addEventListener('scroll', () => onScroll());
+        window.addEventListener('resize', () => onScroll());
+     "
         :class="scrolled
-            ?
-            'fixed z-50 bg-[#010c29] shadow-lg backdrop-blur-md translate-x-[185px] w-auto transition-all duration-300' :
-            'fixed w-full z-50 bg-transparent transition-all duration-300'"
+        ?
+        'fixed z-50 bg-[#010c29] shadow-lg backdrop-blur-md translate-x-[185px] w-auto transition-all duration-300' :
+        'fixed w-full z-50 bg-transparent transition-all duration-300'"
         class="fixed z-50 w-full">
+
         <nav class=" bg-[#071434] p-4 container mx-auto rounded-xl absolute z-50 h-fit" x-data="{ scrolled: false }"
             x-init="window.addEventListener('scroll', () => {
                 scrolled = window.scrollY > 50
@@ -84,8 +99,7 @@
                         class="{{ Route::is('reviews') ? 'bg-[#1f2b48] px-4 py-2 rounded-md' : 'text-[#c4c4c4]' }} hover:text-white transition duration-300">
                         Reviews</a>
                     <a href="{{ route('contact-us') }}"
-                        class="{{ Route::is('contact-us
-                        ') ? 'bg-[#1f2b48] px-4 py-2 rounded-md' : 'text-[#c4c4c4]' }} hover:text-white transition duration-300">
+                        class="{{ Route::is('contact-us') ? 'bg-[#1f2b48] px-4 py-2 rounded-md' : 'text-[#c4c4c4]' }} hover:text-white transition duration-300">
                         Contact Us</a>
                 </ul>
 
@@ -93,13 +107,12 @@
                 <div class="hidden lg:block">
                     <a href="{{ route('bookARide') }}"
                         class="flex items-center gap-2 bg-[#19957b] hover:bg-[#007748]
-              px-6 py-3 rounded-md text-lg font-medium text-white transition">
+                    px-6 py-3 rounded-md text-lg font-medium text-white transition">
 
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="size-6">
                             <path fill="currentColor"
                                 d="m255.43 117l-14-35a15.93 15.93 0 0 0-14.85-10H192v-8a8 8 0 0 0-8-8H32a16 16 0 0 0-16 16v112a16 16 0 0 0 16 16h17a32 32 0 0 0 62 0h50a32 32 0 0 0 62 0h17a16 16 0 0 0 16-16v-64a7.9 7.9 0 0 0-.57-3M80 208a16 16 0 1 1 16-16a16 16 0 0 1-16 16m56-80h-16v16a8 8 0 0 1-16 0v-16H88a8 8 0 0 1 0-16h16V96a8 8 0 0 1 16 0v16h16a8 8 0 0 1 0 16m56 80a16 16 0 1 1 16-16a16 16 0 0 1-16 16m0-96V88h34.58l9.6 24Z" />
                         </svg>
-
                         Book a Ride
                     </a>
                 </div>
@@ -118,12 +131,12 @@
                 <div id="mobile-menu"
                     class="lg:hidden fixed inset-0 bg-[#071732] transform -translate-x-full transition-transform duration-300 ease-in-out z-40">
                     <div class="flex flex-col items-center justify-center h-full space-y-8 text-xl">
-                        <a href="#" class="hover:bg-[#0e2b5e] px-6 py-3 rounded-md transition">Home</a>
-                        <a href="#" class="hover:bg-[#0e2b5e] px-6 py-3 rounded-md transition">About Us</a>
-                        <a href="#" class="hover:bg-[#0e2b5e] px-6 py-3 rounded-md transition">Services</a>
-                        <a href="#" class="hover:bg-[#0e2b5e] px-6 py-3 rounded-md transition">Destinations</a>
-                        <a href="#" class="hover:bg-[#0e2b5e] px-6 py-3 rounded-md transition">Reviews</a>
-                        <a href="#" class="hover:bg-[#0e2b5e] px-6 py-3 rounded-md transition">Contact Us</a>
+                        <a href="{{ route('home') }}" class="hover:bg-[#0e2b5e] px-6 py-3 rounded-md transition">Home</a>
+                        <a href="{{ route('about-us') }}" class="hover:bg-[#0e2b5e] px-6 py-3 rounded-md transition">About Us</a>
+                        <a href="{{ route('services') }}" class="hover:bg-[#0e2b5e] px-6 py-3 rounded-md transition">Services</a>
+                        <a href="{{ route('destinations') }}" class="hover:bg-[#0e2b5e] px-6 py-3 rounded-md transition">Destinations</a>
+                        <a href="{{ route('reviews') }}" class="hover:bg-[#0e2b5e] px-6 py-3 rounded-md transition">Reviews</a>
+                        <a href="{{ route('contact-us') }}" class="hover:bg-[#0e2b5e] px-6 py-3 rounded-md transition">Contact Us</a>
 
                         <button
                             class="flex items-center gap-2 bg-[#19957b] hover:bg-[#007748] px-8 py-4 rounded-md text-lg font-medium mt-8">

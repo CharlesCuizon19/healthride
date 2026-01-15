@@ -6,7 +6,7 @@
 <x-banner2 title="Contact Us" background="images/contact-us.png" />
 
 
-<section class="w-full bg-[#ffffff] py-20">
+<section class="w-full bg-[#ffffff] py-15 md:py-20">
     <div class="max-w-screen-2xl mx-auto px-6 lg:px-12">
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 overflow-hidden">
@@ -20,7 +20,7 @@
             </div>
 
             {{-- RIGHT: BIGGER FORM --}}
-            <div class="flex flex-col px-8 py-10 md:px-14 md:py-14 lg:px-16 lg:py-20 bg-white">
+            <div class="flex flex-col px-8 py-10 md:px-14 md:py-14 lg:px-16 lg:py-0 bg-white">
 
                 {{-- Pill --}}
                 <div class="mb-6 flex justify-start lg:justify-end">
@@ -36,79 +36,85 @@
                     Compassionate Transport
                 </h2>
 
-                {{-- Form --}}
-                <form action="" method="POST" class="space-y-8">
+                @if(session('contact_success'))
+                <div
+                    class="mb-6 px-5 py-4 rounded-xl
+               bg-emerald-50 border border-emerald-200
+               text-emerald-700 text-base font-semibold
+               flex items-center gap-3">
+
+                    <svg class="w-6 h-6 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414L9 13.414l4.707-4.707z"
+                            clip-rule="evenodd" />
+                    </svg>
+
+                    <span>{{ session('contact_success') }}</span>
+                </div>
+                @endif
+
+                @if ($errors->any())
+                <div class="mb-6 px-5 py-4 rounded-xl bg-red-50 border border-red-200 text-red-700">
+                    <ul class="list-disc list-inside space-y-1">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
+
+
+                <form action="{{ route('contacts.store') }}" method="POST" class="space-y-8">
                     @csrf
 
                     {{-- Row 1 --}}
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                            <input type="text" name="name" placeholder="Enter your full name"
-                                class="w-full rounded-lg border border-gray-300 px-4 py-3 text-base
-                                       focus:outline-none focus:ring-2 focus:ring-[#0A8B6C] focus:border-[#0A8B6C]">
+                            <input type="text" name="full_name" required
+                                class="w-full rounded-lg border border-gray-300 px-4 py-3">
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Phone No.</label>
-                            <input type="text" name="phone" placeholder="Enter your phone no."
-                                class="w-full rounded-lg border border-gray-300 px-4 py-3 text-base
-                                       focus:outline-none focus:ring-2 focus:ring-[#0A8B6C] focus:border-[#0A8B6C]">
+                            <input type="text" name="phone_number"
+                                class="w-full rounded-lg border border-gray-300 px-4 py-3">
                         </div>
                     </div>
 
                     {{-- Row 2 --}}
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                            <input type="email" name="email" placeholder="Enter your email"
-                                class="w-full rounded-lg border border-gray-300 px-4 py-3 text-base
-                                       focus:outline-none focus:ring-2 focus:ring-[#0A8B6C] focus:border-[#0A8B6C]">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" name="email" required
+                                class="w-full rounded-lg border border-gray-300 px-4 py-3">
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
-                            <div class="relative">
-                                <select name="subject"
-                                    class="w-full rounded-lg border border-gray-300 px-4 py-3 text-base pr-12
-                                           appearance-none bg-white
-                                           focus:outline-none focus:ring-2 focus:ring-[#0A8B6C] focus:border-[#0A8B6C]">
-                                    <option value="">Select a subject</option>
-                                    <option value="booking">Ride Booking</option>
-                                    <option value="billing">Billing & Payments</option>
-                                    <option value="general">General Inquiry</option>
-                                </select>
-
-                                <span class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.1 1.02l-4.25 4.5a.75.75 0 01-1.1 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </span>
-                            </div>
+                            <select name="subject" required
+                                class="w-full rounded-lg border border-gray-300 px-4 py-3">
+                                <option value="">Select</option>
+                                <option value="booking">Ride Booking</option>
+                                <option value="billing">Billing & Payments</option>
+                                <option value="general">General Inquiry</option>
+                            </select>
                         </div>
                     </div>
 
                     {{-- Message --}}
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                        <textarea name="message" rows="6" placeholder="Enter your message"
-                            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-base
-                                   resize-none focus:outline-none focus:ring-2 focus:ring-[#0A8B6C] focus:border-[#0A8B6C]"></textarea>
+                        <textarea name="message" rows="5" required
+                            class="w-full rounded-lg border border-gray-300 px-4 py-3"></textarea>
                     </div>
 
                     {{-- Button --}}
-                    <div>
-                        <button type="submit"
-                            class="inline-flex items-center justify-center px-10 py-3.5
-                                   rounded-lg bg-[#0A8B6C] text-white text-base font-semibold
-                                   hover:bg-[#06745a] transition">
-                            Submit Message
-                        </button>
-                    </div>
-
+                    <button type="submit"
+                        class="px-10 py-3 rounded-lg bg-[#0A8B6C] text-white font-semibold">
+                        Submit Message
+                    </button>
                 </form>
             </div>
         </div>
@@ -116,7 +122,7 @@
 </section>
 
 {{-- SECTION 1: Referral Banner --}}
-<section class="w-full bg-[#ffffff] pb-60">
+<section class="w-full bg-[#ffffff] pb-15 md:pb-60">
     <div class="max-w-screen-2xl mx-auto px-6 lg:px-10">
 
         <div
@@ -264,5 +270,12 @@
     </div>
 
 </section>
+
+<script>
+    setTimeout(() => {
+        const msg = document.querySelector('[data-contact-success]');
+        if (msg) msg.classList.add('hidden');
+    }, 6000);
+</script>
 
 @endsection

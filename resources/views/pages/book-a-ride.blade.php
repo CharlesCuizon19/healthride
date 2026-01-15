@@ -107,13 +107,6 @@
                                 <input type="date"
                                     class="w-full rounded-lg border-gray-300 text-base md:text-lg py-3 px-4 pr-12
                            focus:border-emerald-600 focus:ring-emerald-600">
-                                {{-- calendar icon --}}
-                                <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#071434]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor">
-                                        <path
-                                            d="M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a3 3 0 0 1 3 3v13a3 3 0 0 1-3 3H4a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h1V3a1 1 0 0 1 1-1Zm14 8H3v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V10ZM4 6a1 1 0 0 0-1 1v1h18V7a1 1 0 0 0-1-1H4Z" />
-                                    </svg>
-                                </span>
                             </div>
                         </div>
                     </div>
@@ -140,9 +133,7 @@
 
                         {{-- map box --}}
                         <div class="mt-4 rounded-xl border border-emerald-600/60 overflow-hidden bg-white">
-                            <div class="h-56 md:h-72 flex items-center justify-center text-gray-500 text-sm">
-                                Map Preview
-                            </div>
+                            @include('pages.map-test')
                         </div>
 
                         {{-- checkbox under map --}}
@@ -434,7 +425,7 @@
                                                 class="h-8 w-auto">
                                         </div>
 
-                                        <span class="h-3.5 w-3.5 rounded-full bg-emerald-600"></span>
+                                        <!-- <span class="h-3.5 w-3.5 rounded-full bg-emerald-600"></span> -->
                                     </div>
 
                                     <p class="text-base text-gray-600 mt-2">

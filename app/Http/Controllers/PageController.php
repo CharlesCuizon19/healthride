@@ -280,8 +280,9 @@ class PageController extends Controller
         $ridePackages = [
             1 => [
                 'title' => 'Ambulator Transport',
+                'description' => 'Our Ambulator Transport is designed for patients who can walk with little or no assistance but still need safe, dependable transportation to and from medical appointments. Whether it’s for a doctor’s visit, therapy session, or follow-up care, HealthRide ensures every ride is comfortable, timely, and stress-free.',
                 'image' => 'images/transportation1.png',
-                'button_label' => 'Book Ambulator Transport',
+                'button_label' => 'Book Now',
                 'button_url' => '#',
                 'rows' => [
                     [
@@ -307,8 +308,9 @@ class PageController extends Controller
 
             2 => [
                 'title' => 'Wheelchair Transport',
+                'description' => 'Wheelchair Transport provides safe, comfortable, and fully accessible vehicles for passengers who require wheelchair assistance. Our trained drivers ensure a smooth ride from pick-up to drop-off while maintaining the highest safety standards.',
                 'image' => 'images/transportation2.png',
-                'button_label' => 'Book Wheelchair Transport',
+                'button_label' => 'Book Now',
                 'button_url' => '#',
                 'rows' => [
                     [
@@ -334,8 +336,9 @@ class PageController extends Controller
 
             3 => [
                 'title' => 'Special Services',
+                'description' => 'Special Services are tailored for patients with recurring medical needs, such as dialysis or multiple weekly appointments. Flexible scheduling ensures that patients arrive on time and in comfort, with personalized assistance every step of the way.',
                 'image' => 'images/transportation3.png',
-                'button_label' => 'Book Special Services',
+                'button_label' => 'Book Now',
                 'button_url' => '#',
                 'rows' => [
                     [
@@ -373,14 +376,14 @@ class PageController extends Controller
                 'avatar' => 'images/avatar.png',
                 'statement' => 'I rely on HealthRide for my specialist appointments every month, and they always deliver exceptional service. The drivers are friendly, the vehicles are comfortable, and they make sure I arrive on time every single trip. It’s comforting to know I can count on them.',
             ],
-        ]; // ✅ CLOSE THIS ARRAY
+        ];
 
         abort_if(!isset($ridePackages[$id]), 404);
 
         $destination = (object) [
             'id' => $id,
             'title' => $ridePackages[$id]['title'],
-            'description' => 'Write your destination/package description here (or store it in the array).',
+            'description' => $ridePackages[$id]['description'], // ✅ dynamic
             'image' => asset($ridePackages[$id]['image']),
             'button_label' => $ridePackages[$id]['button_label'],
             'button_url' => $ridePackages[$id]['button_url'],
@@ -399,9 +402,10 @@ class PageController extends Controller
             ->values()
             ->toArray();
 
-        // ✅ PASS $reviews to the view
         return view('pages.destination-single-page', compact('destination', 'otherDestinations', 'reviews'));
     }
+
+
     public function bookARide()
     {
         return view('pages.book-a-ride');

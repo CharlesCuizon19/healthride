@@ -4,7 +4,7 @@
 'title' => 'What Our Passengers Say',
 ])
 
-<section class="bg-[#f9f9f9] pt-16 md:pt-20 pb-20 md:pb-40">
+<section class="bg-[#f9f9f9] pt-16 md:pt-20 pb-40 md:pb-40">
     <div class="max-w-9xl mx-auto px-4">
 
         {{-- badge --}}
@@ -21,14 +21,14 @@
 
         <div class="relative max-w-screen-2xl mx-auto">
 
-            {{-- fade masks --}}
-            <div class="pointer-events-none absolute inset-y-0 left-0 w-32 md:w-48 z-10
+            {{-- fade masks (keep sides soft, but NOT hiding the next review too much) --}}
+            <div class="pointer-events-none absolute inset-y-0 left-0 w-14 md:w-28 z-10
                         bg-gradient-to-r from-[#f9f9f9] via-[#f9f9f9]/85 to-transparent"></div>
-            <div class="pointer-events-none absolute inset-y-0 right-0 w-32 md:w-48 z-10
+            <div class="pointer-events-none absolute inset-y-0 right-0 w-14 md:w-28 z-10
                         bg-gradient-to-l from-[#f9f9f9] via-[#f9f9f9]/85 to-transparent"></div>
 
             {{-- Swiper --}}
-            <div class="swiper review-swiper px-6 md:px-12 relative z-0">
+            <div class="swiper review-swiper px-2 sm:px-6 md:px-10 relative z-0">
                 <div class="swiper-wrapper">
                     @foreach ($reviews as $review)
                     @php
@@ -40,8 +40,12 @@
                     @endphp
 
                     <div class="swiper-slide flex justify-center py-6">
-                        <div class="review-card w-full max-w-5xl bg-white rounded-xl border border-gray-200 overflow-hidden">
-                            <div class="px-8 md:px-14 py-10">
+                        {{-- Card width tuned so NEXT/PREV is visible + blurred like your screenshot --}}
+                        <div class="review-card w-full
+                                    max-w-[520px] sm:max-w-[620px] md:max-w-[760px] lg:max-w-[860px] xl:max-w-[920px]
+                                    bg-white rounded-xl border border-gray-200 overflow-hidden">
+
+                            <div class="px-6 sm:px-8 md:px-14 py-8 md:py-10">
                                 <div class="mb-6">
                                     <div class="flex items-center justify-center h-12 w-12 rounded-md bg-emerald-500 text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6">
@@ -52,12 +56,12 @@
                                     </div>
                                 </div>
 
-                                <p class="text-lg md:text-xl leading-relaxed text-[#323a4d]">
+                                <p class="text-base sm:text-lg md:text-xl leading-relaxed text-[#323a4d]">
                                     “{{ $statement }}”
                                 </p>
                             </div>
 
-                            <div class="border-t border-gray-200 px-8 md:px-14 py-6">
+                            <div class="border-t border-gray-200 px-6 sm:px-8 md:px-14 py-6">
                                 <div class="flex items-center gap-4">
                                     @if($avatarSrc)
                                     <img src="{{ $avatarSrc }}" alt="{{ $name }}" class="w-14 h-14 rounded-full object-cover">
@@ -78,26 +82,45 @@
                 </div>
             </div>
 
-            {{-- arrows --}}
+            {{-- arrows (closer to the center review) --}}
             <button type="button"
-                class="review-prev hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2
-                       h-11 w-11 rounded-full border border-gray-300 bg-white shadow-sm
-                       items-center justify-center text-gray-700 hover:bg-gray-50 z-20">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                class="review-prev hidden md:flex absolute
+           top-1/2 -translate-y-1/2
+           left-1/2
+           -translate-x-[calc(50%+16rem)]
+           lg:-translate-x-[calc(50%+19rem)]
+           xl:-translate-x-[calc(50%+23rem)]
+           h-11 w-11 rounded-full
+           border border-gray-300 bg-white shadow-md
+           items-center justify-center
+           text-gray-700 hover:bg-gray-50 z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-5 w-5">
                     <path d="M15 18l-6-6 6-6" />
                 </svg>
             </button>
 
             <button type="button"
-                class="review-next hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2
-                       h-11 w-11 rounded-full border border-gray-300 bg-white shadow-sm
-                       items-center justify-center text-gray-700 hover:bg-gray-50 z-20">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                class="review-next hidden md:flex absolute
+           top-1/2 -translate-y-1/2
+           left-1/2
+           translate-x-[calc(50%+16rem)]
+           lg:translate-x-[calc(50%+19rem)]
+           xl:translate-x-[calc(50%+20rem)]
+           h-11 w-11 rounded-full
+           border border-gray-300 bg-white shadow-md
+           items-center justify-center
+           text-gray-700 hover:bg-gray-50 z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-5 w-5">
                     <path d="M9 18l6-6-6-6" />
                 </svg>
             </button>
+
 
             {{-- dots --}}
             <div class="review-pagination swiper-pagination mt-10 flex justify-center"></div>
@@ -113,20 +136,20 @@
         overflow: visible;
     }
 
-    /* base state = blurred / faded */
+    /* base state = blurred / faded (far slides) */
     .review-swiper .swiper-slide {
-        opacity: .18;
+        opacity: .14;
         transform: scale(.94);
-        filter: blur(2px);
+        filter: blur(2.2px);
         transition: opacity .35s ease, transform .35s ease, filter .35s ease;
     }
 
-    /* prev/next = less blur than far ones */
+    /* prev/next = visible + blur (this is the “next review visible but blur”) */
     .review-swiper .swiper-slide-prev,
     .review-swiper .swiper-slide-next {
-        opacity: .45;
-        transform: scale(.92);
-        filter: blur(1.4px);
+        opacity: .50;
+        transform: scale(.94);
+        filter: blur(1.6px);
     }
 
     /* active = highlighted */
@@ -164,15 +187,16 @@
             loop: true,
             centeredSlides: true,
             speed: 600,
-            spaceBetween: 40,
+
+            // tighter gap so the next/prev card shows like your screenshot
+            spaceBetween: 26,
+
+            // IMPORTANT: numeric so sides can peek
             slidesPerView: 1,
 
             pagination: {
                 el: '.review-pagination',
                 clickable: true,
-                renderBullet: function(index, className) {
-                    return `<span class="${className}"></span>`;
-                },
             },
 
             navigation: {
@@ -180,34 +204,48 @@
                 prevEl: '.review-prev'
             },
 
-            breakpoints: {
-                768: {
-                    slidesPerView: 1.2
-                },
-                1024: {
-                    slidesPerView: 1.6
-                },
-                1440: {
-                    slidesPerView: 2.1
-                },
-            },
-
-            // ✅ keep bullets synced with REAL slides (fix for loop)
+            // Make sure the correct slide is centered on load,
+            // and pagination matches the centered "real" slide.
             on: {
                 init: function() {
+                    // force real slide 0 to be centered first (avoids "bullet 1 but content 2" on load)
+                    this.slideToLoop(0, 0);
                     syncBullets(this);
                 },
-                slideChange: function() {
+                realIndexChange: function() {
                     syncBullets(this);
                 }
-            }
+            },
+
+            breakpoints: {
+                // tablet: show a bit of next/prev
+                768: {
+                    slidesPerView: 1.35,
+                    spaceBetween: 22,
+                },
+                // laptop
+                1024: {
+                    slidesPerView: 1.75,
+                    spaceBetween: 26,
+                },
+                // desktop wide (more peek)
+                1440: {
+                    slidesPerView: 2.10,
+                    spaceBetween: 30,
+                },
+            },
         });
 
         function syncBullets(sw) {
             if (!sw.pagination || !sw.pagination.bullets) return;
-            const real = sw.realIndex;
+
+            const total = sw.pagination.bullets.length;
+            if (!total) return;
+
+            const idx = ((sw.realIndex % total) + total) % total;
+
             sw.pagination.bullets.forEach((b, i) => {
-                b.classList.toggle('swiper-pagination-bullet-active', i === real);
+                b.classList.toggle('swiper-pagination-bullet-active', i === idx);
             });
         }
     });
